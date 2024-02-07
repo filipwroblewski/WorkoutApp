@@ -1,0 +1,171 @@
+<!-- Extends the base layout template -->
+{% extends "workout_logs/layout.html" %}
+
+<!-- Content Block -->
+{% block content %}
+
+<!-- History Section -->
+<div class="history px-4">
+  <h1>Historia ćwiczeń:</h1>
+
+  <!-- Search Form -->
+  <div class="search-form">
+    <form method="get" class="row g-3">
+      <div class="col-md-3">
+        <label for="exercise_info" class="form-label">Szukaj ćwiczenia:</label>
+        <div class="input-group">
+          <input type="text" name="exercise_info" id="exercise_info" class="form-control" {% if exercise_info %}value="{{ exercise_info }}"{% endif %} placeholder="Wyszukaj ćwiczenie">
+          <button type="submit" class="btn btn-main">Szukaj</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Filter Form -->
+  <div class="filter-form">
+    <form method="get" class="row g-3">
+      <!-- Exercise Name Filter -->
+      <div class="col-md-3">
+        <label for="exercise_name" class="form-label">Nazwa:</label>
+        <select name="exercise_name" id="exercise_name" class="form-select">
+          <option value="">-- Wszystkie ćwiczenia --</option>
+          {% for exercise in exercises %}
+            <option value="{{ exercise.name }}" {% if exercise.name == exercise_name %}selected{% endif %}>{{ exercise.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Date Range Filter -->
+      <div class="col-md-3">
+        <label for="date" class="form-label">Przedział czasu:</label>
+        <div class="input-group">
+          <span class="input-group-text">Od</span>
+          <input type="date" name="date_start" id="date_start" value="{{ date_start }}" class="form-control">
+          <span class="input-group-text">Do</span>
+          <input type="date" name="date_end" id="date_end" value="{{ date_end }}" class="form-control">
+        </div>
+      </div>
+
+      <!-- Distance Filter -->
+      <div class="col-md-3">
+        <label for="distance" class="form-label">Dystans:</label>
+        <div class="input-group">
+          <span class="input-group-text">Od</span>
+          <input type="number" name="distance_start" id="distance_start" step="0.01" value="{{ distance_start }}" class="form-control" placeholder="np. 5.5">
+          <span class="input-group-text">Do</span>
+          <input type="number" name="distance_end" id="distance_end" step="0.01" value="{{ distance_end }}" class="form-control" placeholder="np. 11.4">
+          <span class="input-group-text">km</span>
+        </div>
+      </div>
+
+      <!-- Duration Filter -->
+      <div class="col-md-3">
+        <label for="duration" class="form-label">Czas trwania:</label>
+        <div class="input-group">
+          <span class="input-group-text">Od</span>
+          <input type="number" name="duration_start" id="duration_start" min="0" value="{{ duration_start }}" class="form-control" placeholder="np. 30">
+          <span class="input-group-text">Do</span>
+          <input type="number" name="duration_end" id="duration_end" min="0" value="{{ duration_end }}" class="form-control" placeholder="np. 110">
+          <span class="input-group-text">min</span>
+        </div>
+      </div>
+
+      <!-- Filter Submission and Reset Buttons -->
+      <div class="col-12">
+        <button type="submit" class="btn btn-main">Filtruj</button>
+        <a href="?page=1{% if exercise_info %}&exercise_info={{ exercise_info }}{% endif %}" class="btn btn-main-secondary">Wyczyść</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Table Displaying Workout History -->
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th style="width: 15%;">Nazwa</th>
+          <th style="width: 15%;">Czas trwania</th>
+          <th style="width: 15%;">Dystans</th>
+          <th style="width: 15%;">Data</th>
+          <th style="width: 30%;">Komentarz</th>
+          <th style="width: 10%;">Dostępne akcje</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for exercise in page_obj %}
+        <tr>
+          <td>{{ exercise.exercise }}</td>
+          <td>{{ exercise.duration }}</td>
+          <td>{{ exercise.distance }} km</td>
+          <td>{{ exercise.created_at|date:"d.m.Y H:i" }}</td>
+          <td>{{ exercise.comment }}</td>
+          <td>
+            <!-- Delete and Edit Workout Actions -->
+            <a href="{% url 'delete_workout' exercise.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten trening?')">Usuń</a>
+            <a href="{% url 'edit_workout' exercise.id %}" class="btn btn-main">Edytuj</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination Section -->
+  <div class="d-flex justify-content-center mt-3">
+    <div class="pagination">
+      <span class="step-links">
+        <!-- Pagination Links -->
+        {% if page_obj.has_previous %}
+          <a href="?page=1
+            {% if exercise_name %}&exercise_name={{ exercise_name }}{% endif %}
+            {% if exercise_info %}&exercise_info={{ exercise_info }}{% endif %}
+            {% if distance_start %}&distance_start={{ distance_start }}{% endif %}
+            {% if distance_end %}&distance_end={{ distance_end }}{% endif %}
+            {% if duration_start %}&duration_start={{ duration_start }}{% endif %}
+            {% if duration_end %}&duration_end={{ duration_end }}{% endif %}
+            {% if date_start %}&date_start={{ date_start }}{% endif %}
+            {% if date_end %}&date_end={{ date_end }}{% endif %}" class="btn btn-main">&laquo; pierwsza</a>
+          <a href="?page={{ page_obj.previous_page_number }}
+            {% if exercise_name %}&exercise_name={{ exercise_name }}{% endif %}
+            {% if exercise_info %}&exercise_info={{ exercise_info }}{% endif %}
+            {% if distance_start %}&distance_start={{ distance_start }}{% endif %}
+            {% if distance_end %}&distance_end={{ distance_end }}{% endif %}
+            {% if duration_start %}&duration_start={{ duration_start }}{% endif %}
+            {% if duration_end %}&duration_end={{ duration_end }}{% endif %}
+            {% if date_start %}&date_start={{ date_start }}{% endif %}
+            {% if date_end %}&date_end={{ date_end }}{% endif %}" class="btn btn-main">poprzednia</a>
+        {% endif %}
+
+        <!-- Current Page Information -->
+        <span class="current">
+          Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        <!-- Next and Last Page Links -->
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}
+            {% if exercise_name %}&exercise_name={{ exercise_name }}{% endif %}
+            {% if exercise_info %}&exercise_info={{ exercise_info }}{% endif %}
+            {% if distance_start %}&distance_start={{ distance_start }}{% endif %}
+            {% if distance_end %}&distance_end={{ distance_end }}{% endif %}
+            {% if duration_start %}&duration_start={{ duration_start }}{% endif %}
+            {% if duration_end %}&duration_end={{ duration_end }}{% endif %}
+            {% if date_start %}&date_start={{ date_start }}{% endif %}
+            {% if date_end %}&date_end={{ date_end }}{% endif %}" class="btn btn-main">następna</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}
+            {% if exercise_name %}&exercise_name={{ exercise_name }}{% endif %}
+            {% if exercise_info %}&exercise_info={{ exercise_info }}{% endif %}
+            {% if distance_start %}&distance_start={{ distance_start }}{% endif %}
+            {% if distance_end %}&distance_end={{ distance_end }}{% endif %}
+            {% if duration_start %}&duration_start={{ duration_start }}{% endif %}
+            {% if duration_end %}&duration_end={{ duration_end }}{% endif %}
+            {% if date_start %}&date_start={{ date_start }}{% endif %}
+            {% if date_end %}&date_end={{ date_end }}{% endif %}" class="btn btn-main">ostatnia &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- End of Content Block -->
+{% endblock content %}

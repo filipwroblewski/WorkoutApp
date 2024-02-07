@@ -1,0 +1,30 @@
+/* Avatar premium animation */
+/* Styles for creating a premium avatar animation */
+.premium-avatar-animation {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+/* Keyframes for the rotate animation */
+@keyframes rotate {
+  0%,
+  25% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(-30deg);
+  }
+  50% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Apply the rotate animation to the img element inside premium-avatar-animation */
+.premium-avatar-animation img {
+  animation: rotate 10s linear infinite;
+}
+/* Avatar premium animation */

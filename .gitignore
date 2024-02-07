@@ -1,0 +1,14 @@
+# ignore virtual environment
+venv
+
+# ignore pycache
+__pycache__
+
+# ignore all profilepictures, to avoid too much data in db
+workout_app/static/images/profile_pictures/*
+
+# ignore database file
+db.sqlite3
+
+# ignore migrations
+migrations

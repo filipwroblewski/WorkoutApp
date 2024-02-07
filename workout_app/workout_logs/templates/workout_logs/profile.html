@@ -1,0 +1,103 @@
+{% extends "workout_logs/layout.html" %} {% block content %} {% load static %}
+
+<!-- Container for User Profile Information -->
+<div class="container">
+  <div class="text-center">
+    <!-- Displaying Flash Messages -->
+    {% for message in messages %}
+    <div
+      class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %}"
+      role="alert"
+    >
+      {{ message }}
+    </div>
+    {% endfor %}
+
+    <!-- Greeting Message with User's First and Last Name -->
+    {% if request.user.first_name or request.user.last_name %}
+    <h1>Witaj, {{ request.user.first_name }} {{ request.user.last_name }}</h1>
+    {% endif %}
+
+    <!-- Display Premium Account Information -->
+    {% if is_premium_active %}
+    <p>
+      Konto Premium - do: {{ user_profile.premium_account.end_date|date:"d.m.Y"
+      }} ({{ user_profile.premium_account.end_date|time:"H:i" }})
+    </p>
+    {% else %}
+    <p>
+      Nie masz premium? <a href="{% url 'process_payment' %}">Kup Premium</a>
+    </p>
+    {% endif %}
+
+    <!-- Display User Information -->
+    <ul>
+      <ol>
+        Nazwa użytkownika: {{ request.user.username }}
+      </ol>
+      <ol>
+        Email: {{ request.user.email }}
+      </ol>
+    </ul>
+
+    <!-- Display User Profile Picture -->
+    <div {% if is_premium_active %}class="premium-avatar-animation" {% endif %}>
+      {% if user_profile.profile_picture %}
+      <img
+        src="{{ user_profile.profile_picture.url }}"
+        alt="Profile Picture"
+        width="300"
+        height="300"
+        class="rounded-circle"
+      />
+      {% else %}
+      <p>Domyślne zdjęcie profilowe</p>
+      <img
+        src="{% static 'images/default_profile_pic.png' %}"
+        width="300"
+        height="300"
+        class="rounded-circle"
+        alt="Zdjęcie domyślne"
+      />
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Form for Updating User Profile Information -->
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="first_name" class="form-label">Imię</label>
+      <input
+        type="text"
+        name="first_name"
+        id="first_name"
+        class="form-control"
+        value="{{ user.first_name }}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="last_name" class="form-label">Nazwisko</label>
+      <input
+        type="text"
+        name="last_name"
+        id="last_name"
+        class="form-control"
+        value="{{ user.last_name }}"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="profile_picture" class="form-label">Zdjęcie profilowe</label>
+      <input
+        type="file"
+        name="profile_picture"
+        accept="image/*"
+        id="id_profile_picture"
+        class="form-control"
+      />
+    </div>
+    <button type="submit" class="btn btn-main">Zapisz zmiany</button>
+  </form>
+</div>
+
+{% endblock content %}

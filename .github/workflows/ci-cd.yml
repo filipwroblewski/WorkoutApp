@@ -1,0 +1,35 @@
+name: CI/CD for Django Workout App
+# Define the name of the CI/CD workflow
+
+on:
+  push:
+    branches:
+      - main
+# Trigger the workflow on push events to the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # Use the latest version of the Ubuntu operating system
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        # Checkout the code repository
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11.0
+        # Set up Python with the specified version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        # Install project dependencies using pip
+
+      - name: Run tests
+        working-directory: workout_app
+        run: python manage.py test
+        # Run tests for the Django application located in the 'workout_app' directory

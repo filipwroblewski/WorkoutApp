@@ -1,0 +1,115 @@
+<!-- Footer Section -->
+<footer class="text-center text-lg-start bg-light text-muted mt-4">
+  <!-- Footer Navigation Section -->
+  <section class="mb-4 pt-4">
+    <div class="container">
+      <div class="row text-center">
+        <!-- Quick Access Links -->
+        <div class="col-md-4">
+          <h4>Szybki dostęp</h4>
+          <ul class="list-unstyled">
+            <li>
+              <a href="{% url 'index' %}" class="link-secondary"
+                ><i class="fas fa-home"></i> Strona główna</a
+              >
+            </li>
+            <li>
+              <a href="{% url 'history' %}" class="link-secondary"
+                ><i class="fas fa-history"></i> Historia</a
+              >
+            </li>
+            <li>
+              <a href="{% url 'add_workout' %}" class="link-secondary"
+                ><i class="fas fa-dumbbell"></i> Dodaj ćwiczenie</a
+              >
+            </li>
+            <li>
+              <a href="{% url 'profile' %}" class="link-secondary"
+                ><i class="fas fa-user-gear"></i> Profil</a
+              >
+            </li>
+            <li>
+              <a href="{% url 'logout' %}" class="link-secondary"
+                ><i class="fas fa-arrow-right-from-bracket"></i> Wyloguj</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Information and Support Links -->
+        <div class="col-md-4">
+          <h4>Informacje i wsparcie</h4>
+          <ul class="list-unstyled">
+            <li>
+              <a href="mailto:support@workoutapp.pc" class="link-secondary"
+                ><i class="fas fa-envelope"></i> support@workoutapp.pl</a
+              >
+            </li>
+            <li>
+              <a href="{% url 'faq' %}" class="link-secondary"
+                ><i class="fas fa-question-circle"></i> FAQ</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Stay Connected Links -->
+        <div class="col-md-4">
+          <h4>Pozostań z nami</h4>
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a
+                href="https://www.facebook.com/"
+                class="link-secondary"
+                target="_blank"
+                ><i class="fab fa-facebook"></i
+              ></a>
+            </li>
+            <li class="list-inline-item">
+              <a
+                href="https://www.discord.com/"
+                class="link-secondary"
+                target="_blank"
+                ><i class="fab fa-discord"></i
+              ></a>
+            </li>
+            <li class="list-inline-item">
+              <a
+                href="https://www.instagram.com/"
+                class="link-secondary"
+                target="_blank"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </li>
+            <li class="list-inline-item">
+              <a
+                href="https://www.youtube.com/"
+                class="link-secondary"
+                target="_blank"
+                ><i class="fab fa-youtube"></i
+              ></a>
+            </li>
+            <li class="list-inline-item">
+              <a
+                href="https://www.spotify.com/"
+                class="link-secondary"
+                target="_blank"
+                ><i class="fab fa-spotify"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Copyright Information Section -->
+  <div
+    class="text-center fw-lighter p-4"
+    style="background-color: rgba(0, 0, 0, 0.05)"
+  >
+    &copy; 2023 Wszystkie prawa zastrzeżone | Utworzone przez
+    <span class="fw-normal">Zespół WorkoutApp</span>
+  </div>
+</footer>
+<!-- End of Footer Section -->

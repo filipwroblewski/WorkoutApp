@@ -1,0 +1,92 @@
+{% extends "users/layout.html" %} {% load static %} {% block body %}
+
+<div class="container py-5 h-100">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+      <div class="card bg-white text-dark">
+        <div class="card-body p-5 text-center">
+          <div class="mb-md-5 mt-md-4 pb-5">
+            <!-- WorkoutApp Logo -->
+            <img
+              src="{% static 'images/WorkoutApp-logo.png' %}"
+              alt="WorkoutApp Logo"
+              class="img-fluid mb-2"
+            />
+
+            <!-- Login instructions -->
+            <p class="text-dark-50 mb-5">
+              Zaloguj się, aby zarejestrować swój trening
+            </p>
+
+            <!-- Login Form -->
+            <form action="{% url 'login' %}" method="post" class="login-email">
+              {% csrf_token %}
+              <div class="form-outline form-floating mb-4">
+                <input
+                  type="text"
+                  name="username"
+                  id="id_username"
+                  class="form-control form-control-lg"
+                  placeholder="Nazwa użytkownika"
+                  required
+                />
+                <label for="id_username">Nazwa użytkownika</label>
+              </div>
+              <div class="form-outline form-floating mb-4">
+                <input
+                  type="password"
+                  name="password"
+                  id="id_password"
+                  class="form-control form-control-lg"
+                  placeholder="Hasło"
+                  required
+                />
+                <label for="id_password">Hasło</label>
+              </div>
+              <div class="mb-4">
+                <input
+                  type="submit"
+                  value="Zaloguj"
+                  class="btn btn-main btn-lg px-5"
+                />
+              </div>
+            </form>
+
+            <!-- Social Media Links -->
+            <div
+              class="social d-flex justify-content-center text-center mt-2 pt-1"
+            >
+              <a href="https://www.facebook.com/" target="_blank"
+                ><i class="fab fa-facebook fa-lg"></i
+              ></a>
+              <a href="https://www.discord.com/" target="_blank"
+                ><i class="fab fa-discord fa-lg mx-2 px-1"></i
+              ></a>
+              <a href="https://www.instagram.com/" target="_blank"
+                ><i class="fab fa-instagram fa-lg mx-2 px-1"></i
+              ></a>
+              <a href="https://www.youtube.com/" target="_blank"
+                ><i class="fab fa-youtube fa-lg mx-2 px-1"></i
+              ></a>
+              <a href="https://www.spotify.com/" target="_blank"
+                ><i class="fab fa-spotify fa-lg"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- Registration link -->
+          <div>
+            <p class="mb-0">
+              Nie masz konta?
+              <a href="{% url 'register' %}" class="text-dark-50 fw-bold"
+                >Zarejestruj się tutaj</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "workout_logs/layout.html" %}
+
+{% block content %}
+
+<div class="container">
+
+  <!-- Page heading for editing a workout -->
+  <h1>Edytuj trening</h1>
+
+  <!-- Display success messages if any -->
+  {% if messages %}
+  <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+    {% for message in messages %}
+      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+        <div class="toast-header">
+          <strong class="me-auto">Pomyślnie edytowano trening</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          {{ message }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Form for editing an existing workout -->
+  <form method="post">
+  {% csrf_token %}
+  
+  <div class="row mb-3">
+    <!-- Left column with exercise details -->
+    <div class="col-md-6">
+        <div class="form-group mb-3">
+            <label for="exercise">Rodzaj treningu:</label>
+            <select name="exercise" id="exercise" class="form-control">
+                <!-- Dropdown for selecting the type of exercise -->
+                {% for exercise in exercises %}
+                    <option value="{{ exercise.id }}" {% if exercise.id == current_workout.exercise.id %}selected{% endif %}>
+                        {{ exercise.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+      <div class="form-group mb-3">
+        <label for="created_at">Data i czas:</label>
+        <!-- Input for selecting date and time -->
+        <input type="datetime-local" name="created_at" id="created_at" class="form-control" value="{{ current_workout.created_at|date:'Y-m-d\TH:i' }}" required>
+      </div>
+      
+      <div class="form-group mb-3">
+        <label for="duration">Czas trwania (minuty):</label>
+        <!-- Input for entering workout duration -->
+        <input type="number" name="duration" id="duration" class="form-control" value="{{ duration_minutes }}" required step="1">
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="distance">Dystans (km):</label>
+        <!-- Input for entering workout distance -->
+        <input type="number" name="distance" id="distance" class="form-control" value="{{ current_workout.distance }}" required step="any">
+      </div>
+    </div>
+
+    <!-- Right column with space for additional comments -->
+    <div class="col-md-6">
+      <div class="form-group h-100">
+        <label for="comment">Notatka:</label>
+        <!-- Textarea for entering additional comments -->
+        <textarea name="comment" id="comment" class="form-control h-100" rows="5">{{ current_workout.comment }}</textarea>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Submit button to save changes and cancel button to go back to history -->
+  <button type="submit" class="btn btn-main">Zapisz zmiany</button>
+  <a href="{% url 'history' %}" class="btn btn-main-secondary">Anuluj</a>
+</form>
+
+</div>
+
+{% endblock content %}

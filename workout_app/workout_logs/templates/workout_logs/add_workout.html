@@ -1,0 +1,111 @@
+{% extends "workout_logs/layout.html" %} {% block content %}
+
+<div class="training-page container">
+  <!-- Page heading for adding a workout -->
+  <h1>Dodaj trening</h1>
+
+  <!-- Display success messages if any -->
+  {% if messages %}
+  <div
+    id="toast-container"
+    class="position-fixed top-0 end-0 p-3"
+    style="z-index: 9999"
+  >
+    {% for message in messages %}
+    <div
+      class="toast"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      data-bs-autohide="true"
+    >
+      <div class="toast-header">
+        <strong class="me-auto">Pomyślnie dodano ćwiczenie</strong>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="toast-body">{{ message }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Form for adding a new workout -->
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="row">
+      <!-- Left column with exercise details -->
+      <div class="col-md-6">
+        <div class="row mb-3">
+          <div class="form-group col-md-6">
+            <label for="exercise">Rodzaj treningu:</label>
+            <select name="exercise" id="exercise" class="form-control">
+              <!-- Dropdown for selecting the type of exercise -->
+              {% for exercise in exercises %}
+              <option value="{{ exercise.id }}">{{ exercise.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="created_at">Data i czas:</label>
+            <input
+              type="datetime-local"
+              name="created_at"
+              id="created_at"
+              class="form-control"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="form-group col-md-6">
+            <label for="duration">Czas trwania (minuty):</label>
+            <input
+              type="number"
+              name="duration"
+              id="duration"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="distance">Dystans (km):</label>
+            <input
+              type="text"
+              name="distance"
+              id="distance"
+              class="form-control"
+              required
+              step="any"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column with space for additional comments -->
+      <div class="col-md-6">
+        <div class="form-group h-100">
+          <label for="comment">Notatka:</label>
+          <textarea
+            name="comment"
+            id="comment"
+            class="form-control h-100"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit button to add the exercise -->
+    <button type="submit" class="btn btn-main">Dodaj ćwiczenie</button>
+  </form>
+</div>
+
+{% endblock content %}

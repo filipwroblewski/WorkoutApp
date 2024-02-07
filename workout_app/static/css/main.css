@@ -1,0 +1,74 @@
+/* Variable declarations for color and font values */
+:root {
+  --main-dark-color: #2f2e41;
+  --main-dark-color-hover: #42414f;
+  --main-light-color: #6c63ff;
+  --main-light-color-hover: #4c43c2;
+  --main-font-family: "Poppins", sans-serif;
+  --secondary-font-family: "Montserrat", sans-serif;
+}
+
+/* Body styling */
+body {
+  overflow-x: hidden;
+  font-family: var(--main-font-family);
+}
+
+/* Anchor styling */
+a {
+  color: var(--main-light-color) !important;
+}
+
+a:hover {
+  color: var(--main-light-color-hover) !important;
+}
+
+/* Navigation link styling */
+nav a {
+  font-family: var(--secondary-font-family);
+}
+
+/* Footer link styling */
+footer a {
+  text-decoration: none;
+}
+
+/* Specific styling for links within the history class */
+.history a {
+  color: #fff !important;
+}
+
+/* Button styling */
+.btn.btn-main {
+  background-color: var(--main-light-color) !important;
+  color: #fff !important;
+}
+
+.btn.btn-main:hover {
+  background-color: var(--main-light-color-hover) !important;
+}
+
+.btn.btn-main-secondary {
+  background-color: var(--main-dark-color) !important;
+  color: #fff !important;
+}
+
+.btn.btn-main-secondary:hover {
+  background-color: var(--main-dark-color-hover) !important;
+}
+
+/* Login card styling */
+/* Applying border radius and border to cards */
+.card {
+  border-radius: 1rem;
+  border: 2px solid var(--main-dark-color);
+}
+
+/* Styling for social links inside the card */
+.card .social a {
+  color: var(--main-dark-color) !important;
+}
+
+.card .social a:hover {
+  color: var(--main-light-color-hover) !important;
+}

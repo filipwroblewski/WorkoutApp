@@ -1,0 +1,48 @@
+<!-- Extends the base layout template -->
+{% extends "workout_logs/layout.html" %}
+
+<!-- Content Block -->
+{% block content %}
+<div class="container mt-5">
+  <!-- Title for Register Workout Section -->
+  <h1 class="text-center">Zarejestruj trening!</h1>
+
+  <!-- Subtitle for Latest Exercises Section -->
+  <h3 class="mt-4">Ostatnie ćwiczenia:</h3>
+
+  <!-- Table Displaying Latest Exercises -->
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <!-- Table Header Row -->
+        <tr>
+          <th>Data</th>
+          <th>Nazwa</th>
+          <th>Czas trwania</th>
+          <th>Dystans</th>
+          <th style="width: 20%">Komentarz</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Loop through latest exercises and display in table rows -->
+        {% for exercise in latest_exercises %}
+        <tr>
+          <td>{{ exercise.created_at|date:"Y-m-d" }}</td>
+          <td>{{ exercise.exercise }}</td>
+          <td>{{ exercise.duration }}</td>
+          <td>{{ exercise.distance }} km</td>
+          <td>{{ exercise.comment }}</td>
+        </tr>
+        {% empty %}
+        <!-- Displayed when no exercises are found -->
+        <tr>
+          <td colspan="5">Nie znaleziono zarejestrowanych ćwiczeń.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- End of Content Block -->
+{% endblock content %}

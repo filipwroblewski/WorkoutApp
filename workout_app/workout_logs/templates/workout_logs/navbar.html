@@ -1,0 +1,74 @@
+{% load static %}
+
+<!-- Navigation Bar -->
+<nav class="fixed-top py-3">
+  <!-- Container for Navigation -->
+  <div class="container d-flex align-items-center justify-content-between">
+    <!-- WorkoutApp Logo -->
+    <a href="{% url 'index' %}" class="navbar-brand logo">
+      <img
+        src="{% static 'images/WorkoutApp-logo.png' %}"
+        alt="WorkoutApp Logo"
+        class="img-fluid"
+        style="max-width: 200px"
+      />
+    </a>
+
+    <!-- Responsive Menu Bar Icon -->
+    <div id="menu-bar" class="fas fa-bars d-inline-block d-md-none"></div>
+
+    <!-- Navigation Links -->
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'index' %}" class="active"
+          >Strona główna</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'history' %}">Historia</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'add_workout' %}">Dodaj trening</a>
+      </li>
+
+      <!-- User Dropdown -->
+      <div class="dropdown text-end">
+        <!-- Profile Picture or Default Picture -->
+        <a
+          href="#"
+          class="{% if is_premium_active %}premium-avatar-animation{% endif %} d-block link-body-emphasis text-decoration-none dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {% if user.userprofile.profile_picture %}
+          <img
+            src="{{ user.userprofile.profile_picture.url }}"
+            alt="Profile Picture"
+            width="32"
+            height="32"
+            class="rounded-circle"
+          />
+          {% else %}
+          <img
+            src="{% static 'images/default_profile_pic.png' %}"
+            width="32"
+            height="32"
+            class="rounded-circle"
+            alt="Zdjęcie domyślne"
+          />
+          {% endif %}
+        </a>
+        <!-- Dropdown Menu -->
+        <ul class="dropdown-menu text-small">
+          <li>
+            <a class="dropdown-item" href="{% url 'profile' %}">Profil</a>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a class="dropdown-item" href="{% url 'logout' %}">Wyloguj</a>
+          </li>
+        </ul>
+      </div>
+    </ul>
+  </div>
+</nav>
